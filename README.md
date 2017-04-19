@@ -10,10 +10,10 @@ https://pythonhosted.org/django-auth-ldap/index.html
 
 Install an LDAP server as slapd in your machine and initialize a DIT.
 It can be easily achieved in Ubuntu using:
+
     # dpkg-reconfigure slapd
 
-
-Also using a web editor for LDAP as phpldapadmin recommended.
+Also using a web editor for LDAP as phpldapadmin is recommended.
 
 Build a directory tree according your needs.
 
@@ -27,14 +27,16 @@ You need to install certain development libs:
 Also using virtualenv is convenient.
 
 Install ldap package in your environment:
+
     $ pip install django-auth-ldap
 
 ## Configure your app
 
-Add that lines:
-# LDAP auth
+Add that lines to settings.py
 
 ```python
+# LDAP auth
+
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
