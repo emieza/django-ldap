@@ -128,5 +128,31 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=usuaris,dc=enric,dc=local"
+#AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=usuaris,dc=enric,dc=local"
 
+# use that if using external directory instead of localhost
+#AUTH_LDAP_SERVER_URI = "ldap://ldap.example.com"
+
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, PosixGroupType
+
+AUTH_LDAP_BIND_DN = "cn=admin,dc=enric,dc=local"
+AUTH_LDAP_BIND_PASSWORD = "enricus314"
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=usuaris,dc=enric,dc=local",
+    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
+
+import logging
+
+logger = logging.getLogger('django_auth_ldap')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG)
+
+#AUTH_LDAP_MIRROR_GROUPS = True
+
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("ou=grups,dc=enric,dc=local",
+    ldap.SCOPE_SUBTREE, "(objectClass=top)"
+)
+
+AUTH_LDAP_GROUP_TYPE = PosixGroupType()
+
+#print "GROUPS="+str(PosixGroupType())
